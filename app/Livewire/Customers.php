@@ -118,6 +118,10 @@ class Customers extends Component
     public function render()
     {
         $customers = Customer::paginate(10);
-        return view('livewire.customers', compact('customers'));
+        return view('livewire.customers', compact('customers'))
+            ->layout('layouts.admin.admin', [
+            'title' => 'Clientes',
+            'subtitle' => 'Gerencie seus clientes'
+        ]);
     }
 }

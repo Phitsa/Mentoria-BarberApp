@@ -93,7 +93,11 @@ class Services extends Component
     public function render() {
         $services = Service::paginate(10);
 
-        return view('livewire.services', compact('services'));
+        return view('livewire.services', compact('services'))
+            ->layout('layouts.admin.admin', [
+                'title' => 'Serviços',
+                'subtitle' => 'Gerencie seus serviços'
+            ]);
     }
 
 }

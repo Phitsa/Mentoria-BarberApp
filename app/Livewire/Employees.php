@@ -74,6 +74,10 @@ class Employees extends Component
     public function render()
     {
         $employees = Employee::paginate(10);
-        return view('livewire.employees', compact('employees'));
+        return view('livewire.employees', compact('employees'))
+            ->layout('layouts.admin.admin', [
+                'title' => 'Funcionários',
+                'subtitle' => 'Gerencie seus funcionários'
+            ]);
     }
 }
