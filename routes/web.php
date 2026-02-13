@@ -9,6 +9,11 @@ use App\Http\Controllers\Admin\Customers\CustomersController;
 use App\Http\Controllers\Admin\Employee\EmployeeController;
 use App\Http\Controllers\Admin\Products\ProductsController;
 use App\Http\Controllers\Admin\Services\ListServicesController;
+use App\Livewire\Customers;
+use App\Livewire\Dashboard;
+use App\Livewire\Employees;
+use App\Livewire\Products;
+use App\Livewire\Services;
 
 Route::get('/', function () {
     return redirect()->route('admin.index');
@@ -16,7 +21,7 @@ Route::get('/', function () {
 
 Route::prefix("admin") // Prefix é usado para criar um grupo de rotas
     ->name('admin.') // Nome do grupo
-    ->group(function (): void { // Função que define esse grupo {
+    ->group(function (): void { // Função que define esse grupo
 
         Route::prefix('auth') // Criando subgrupo
             ->name('auth.') // Nome do subgrupo
@@ -27,30 +32,10 @@ Route::prefix("admin") // Prefix é usado para criar um grupo de rotas
             });
 
         Route::middleware('auth')->group(function(): void {
-            Route::get('', DashboardController::class)->name('index'); // Rota Padrão
-
-            Route::prefix('customers') // Criando subgrupo
-                ->name('customers.') // Nome do subgrupo
-                ->group(function () {  // Função que define esse grupo
-                    Route::get('', CustomersController::class)->name('index');
-                });
-
-            Route::prefix('employees')
-            ->name('employees.')
-            ->group(function () {
-                Route::get('', EmployeeController::class)->name('index');
-            });
-
-            Route::prefix('services') // Criando subgrupo
-                ->name('services.') // Nome do subgrupo
-                ->group(function () { // Função que define esse grupo
-                    Route::get('', ListServicesController::class)->name('index');
-                });
-
-            Route::prefix('products') // Criando subgrupo
-                ->name('products.') // Nome do subgrupo
-                ->group(function () { // Função que define esse grupo
-                    Route::get('', ProductsController::class)->name('index');
-                });
+            Route::get('customers', Customers::class)->name('customers.index');
+            Route::get('services', Services::class)->name('services.index');
+            Route::get('products', Products::class)->name('products.index');
+            Route::get('employees', Employees::class)->name('employees.index');
+            Route::get('', Dashboard::class)->name('index');
         });
     });
