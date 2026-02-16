@@ -55,60 +55,57 @@
         {{ $services->links() }}
     </div>
 
-    {{-- Modal --}}
-    <form
-        wire:submit.prevent="save"
-        method="POST"
-        class="{{ $showModal ? 'inline' : 'hidden' }}
-               z-50 w-1/2 max-w-lg rounded-xl shadow-lg bg-white py-10 px-8 border border-gray-300
-               absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    >
-    @csrf
-        <div class="flex justify-between gap-10 items-center mb-8">
-            <h2 class="text-3xl font-semibold">{{ $isEditing ? 'Editar Serviço' : 'Cadastrar Serviço' }}</h2>
+    <div class=" {{ $showModal ? 'flex' : 'hidden' }} z-50 fixed inset-0 items-center justify-center bg-black/40 backdrop-blur-xs">
+        <form
+            wire:submit.prevent="save"
+            method="POST"
+            class="{{ $showModal ? 'inline' : 'hidden' }}
+                w-full max-w-2xl rounded-xl shadow-2xl bg-white border border-gray-300"
+        >
+        @csrf
+            <div class="flex justify-between gap-10 items-center p-6 border-b border-gray-300">
+                <div>
+                    <h2 class="text-3xl font-semibold">{{ $isEditing ? 'Editar Serviço' : 'Cadastrar Serviço' }}</h2>
+                    <p class="text-sm text-gray-400">{{ $isEditing ? 'Altere os dados do serviço' : 'Preencha os dados para cadastrar um novo serviço' }}</p>
+                </div>
 
-            <button
-                type="button"
-                wire:click="closeModal"
-                class="cursor-pointer grid place-items-center h-12 w-12 rounded hover:bg-gray-700/50 transition"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    class="w-7 h-7" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="m15 9-6 6"/>
-                    <path d="m9 9 6 6"/>
-                </svg>
-            </button>
+                <button
+                    type="button"
+                    wire:click="closeModal"
+                    class="grid place-items-center cursor-pointer h-10 w-10 rounded-lg hover:bg-gray-100 transition"
+                >
+                    ✕
+                </button>
 
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-            <div class="">
-                <label class="block text-gray-800 text-md font-bold">Nome</label>
-                <input type="text" wire:model="name" placeholder="Cabelo e barba..." class="border hover:border-blue-400/50 outline-none focus:ring-2 focus:ring-blue-400 border-gray-500 rounded w-full p-2" required>
             </div>
 
-            <div class="">
-                <label class="block text-gray-800 text-md font-bold">Preço</label>
-                <input type="number" step="0.01" wire:model="price" placeholder="59,90" class="hover:border-green-400/50 outline-none focus:ring-2 focus:ring-green-400 transition border border-gray-500 rounded w-full p-2" required>
+            <div class="grid grid-cols-2 gap-2 p-6">
+                <div class="">
+                    <label class="block text-gray-800 text-md">Nome</label>
+                    <input type="text" wire:model="name" placeholder="Nome do Serviço" class="border outline-none focus:ring-2 focus:ring-gray-300 border-gray-300 rounded-lg w-full p-2" required>
+                </div>
+
+                <div class="">
+                    <label class="block text-gray-800 text-md">Preço</label>
+                    <input type="number" step="0.01" wire:model="price" placeholder="00,00" class="outline-none focus:ring-2 focus:ring-gray-300 transition border border-gray-300 rounded-lg w-full p-2" required>
+                </div>
+                <div class="col-span-2 my-1 ">
+                    <label class="block text-gray-800 text-md">Descrição</label>
+                    <textarea name="" wire:model="description" id="" rows="5" placeholder="Descrição do kit, ou condições da promoção..." class="resize-none outline-none focus:ring-2 focus:ring-gray-300 transition border border-gray-300 rounded-lg w-full p-2"></textarea>
+                </div>
             </div>
-            <div class="col-span-2 my-1 ">
-                <label class="block text-gray-800 text-md font-bold">Descrição</label>
-                <textarea name="" wire:model="description" id="" rows="5" placeholder="Descrição do kit, ou condições da promoção..." class="resize-none hover:border-purple-400/50 outline-none focus:ring-2 focus:ring-purple-400 transition border border-gray-500 rounded w-full p-2"></textarea>
+
+
+
+
+            <div class="w-full flex p-6 border-t border-gray-300 justify-end">
+                <button type="submit" class="transition text-white cursor-pointer bg-blue-600 hover:bg-blue-800 text-gray-800 font-bold py-2 px-4 rounded">
+                    Salvar Serviço
+                </button>
             </div>
-        </div>
 
-
-
-
-        <div class="w-full">
-            <button type="submit" class="w-full transition cursor-pointer bg-blue-600 hover:bg-blue-800 text-gray-800 font-bold py-2 px-4 rounded">
-                Salvar Serviço
-            </button>
-        </div>
-
-    </form>
+        </form>
+    </div>
 
     {{-- Delete Modal --}}
     <div class="{{ $isDeleting ? 'inline' : 'hidden' }}
