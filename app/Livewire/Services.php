@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Admin;
 use Livewire\Component;
 use App\Models\Service;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class Services extends Component
 {
@@ -19,12 +21,17 @@ class Services extends Component
     public $price;
     public $name;
 
+    public $adminId;
+
     protected $rules = [
             'price' => 'required|numeric',
             'name'  => 'required|min:3',
             'description' => 'nullable',
     ];
 
+    public function mount() {
+        $this->adminId = Admin::where('user_id', Auth::id())->first()->id;
+    }
     public function create() {
         $this->reset(['name', 'price', 'serviceId', 'description']);
 
@@ -58,7 +65,6 @@ class Services extends Component
 
     public function save() {
         $this->validate();
-
         if ($this->isEditing) {
             Service::find($this->serviceId)->update([
                 'name' => $this->name,
@@ -70,6 +76,7 @@ class Services extends Component
                 'name' => $this->name,
                 'price' => $this->price,
                 'description' => $this->description,
+                'admin_id' => $this->adminId,
             ]);
         }
 
@@ -91,7 +98,7 @@ class Services extends Component
     }
 
     public function render() {
-        $services = Service::paginate(10);
+        $services = Service::where('admin_id', $this->adminId)->paginate(10);
 
         return view('livewire.services', compact('services'))
             ->layout('layouts.admin.admin', [
