@@ -15,13 +15,13 @@
     </div>
 
     <div class="mt-6 w-full shadow-xl">
-        <div class="bg-gray-100 rounded shadow-sm overflow-hidden mb-2">
-            <div class="px-4 py-3 border-b border-gray-300 flex items-center justify-between">
+        <div class="bg-gray-100 rounded-lg shadow-sm overflow-hidden">
+            <div class="px-4 py-3 border-b border-gray-400 flex items-center justify-between">
                 <div class="text-sm text-gray-800">Exibindo {{ $count }} {{ $count === 1 ? 'produto' : 'produtos' }}</div>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-300">
+                <table class="min-w-full divide-y divide-gray-400">
                     <thead class="bg-gray-200">
                         <tr class="text-sm text-gray-900">
                             <th class="px-4 py-3 text-left">Nome</th>
@@ -32,14 +32,14 @@
                         </tr>
                     </thead>
 
-                    <tbody class="divide-y divide-gray-700">
+                    <tbody class="divide-y divide-gray-300">
                         @forelse ($customers as $customer)
                         <tr class="hover:bg-gray-200 text-gray-800">
-                            <td class="px-4 py-4" >{{ $customer->name }}</td>
-                            <td class="px-4 py-4">{{ $customer->tax_id }}</td>
-                            <td class="px-4 py-4">{{ $customer->phone}}</td>
-                            <td class="px-4 py-4">{{ $customer->birth_date}}</td>
-                            <td class="px-4 py-4 text-right">
+                            <td class="p-2" >{{ $customer->name }}</td>
+                            <td class="p-2">{{ $customer->tax_id }}</td>
+                            <td class="p-2">{{ $customer->phone}}</td>
+                            <td class="p-2">{{ $customer->birth_date}}</td>
+                            <td class="p-2 text-right">
                                 {{-- TODO adicionar função see() para apenas mostrar os dados por completo sem opção de alterar. --}}
                                 <button wire:click="edit({{ $customer->id }})" class="cursor-pointer text-indigo-600 hover:text-indigo-700 p-2 rounded-lg hover:bg-gray-300 transition mr-3">Editar</button>
                                 <button wire:click="delete({{ $customer->id }})" class="cursor-pointer text-red-600 hover:text-red-700 p-2 rounded-lg hover:bg-gray-300 transition">Remover</button>
@@ -47,14 +47,16 @@
                         </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-4 py-6 text-center text-gray-400">Nenhum produto cadastrado.</td>
+                                <td colspan="5" class="p-6 text-center text-gray-400">Nenhum cliente     cadastrado.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
+            <div class="p-4 bg-gray-100 border-t border-gray-400">
+                {{ $customers->onEachSide(5)->links() }}
+            </div>
         </div>
-        {{ $customers->links() }}
     </div>
 
     <div class="{{ $showModal ? 'flex' : 'hidden' }} fixed inset-0 z-50 items-center justify-center bg-black/40 backdrop-blur-xs">
@@ -91,7 +93,7 @@
 
                     <div class="">
                         <label class="block text-gray-700 text-md">Senha</label>
-                        <input type="number" step="0.01" wire:model="password" placeholder="••••••" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2" required>
+                        <input type="password" step="0.01" wire:model="password" placeholder="••••••" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2" required>
                         @error('password')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror

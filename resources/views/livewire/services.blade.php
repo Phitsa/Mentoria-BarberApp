@@ -17,12 +17,12 @@
     {{-- Lista de serviços TABLE--}}
     <div class="mt-6 w-full shadow-xl">
         <div class="bg-gray-100 rounded shadow-sm overflow-hidden mb-2">
-            <div class="px-4 py-3 border-b border-gray-300 flex items-center justify-between">
+            <div class="px-4 py-3 border-b border-gray-400 flex items-center justify-between">
                 <div class="text-sm text-gray-800">Exibindo {{ $count }} {{ $count === 1 ? 'serviço' : 'serviços' }}</div>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-300">
+                <table class="min-w-full divide-y divide-gray-400">
                     <thead class="bg-gray-200">
                         <tr class="text-sm font-medium text-gray-800">
                             <th class="px-4 py-3 text-left">Serviço</th>
@@ -31,13 +31,13 @@
                             <th class="px-4 py-3 text-right">Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-gray-100 divide-y divide-gray-700">
+                    <tbody class="bg-gray-100 divide-y divide-gray-300">
                         @forelse ($services as $service)
                         <tr class="hover:bg-gray-200 text-gray-800">
-                            <td class="px-4 py-4">{{ $service->name }}</td>
-                            <td class="px-4 py-4">R$ {{ number_format($service->price, 2, ',', '.') }}</td>
-                            <td class="px-4 py-4"> {{ Str::words($service->description, 6, '...') }}</td>
-                            <td class="px-4 py-4 text-right">
+                            <td class="p-2">{{ $service->name }}</td>
+                            <td class="p-2">R$ {{ number_format($service->price, 2, ',', '.') }}</td>
+                            <td class="p-2"> {{ Str::words($service->description, 6, '...') }}</td>
+                            <td class="p-2 text-right">
                                 {{-- TODO adicionar função see() para apenas mostrar os dados por completo sem opção de alterar. --}}
                                 <button wire:click="edit({{ $service->id }})" class="cursor-pointer text-indigo-600 hover:text-indigo-700 p-2 rounded-lg hover:bg-gray-300 transition mr-3">Editar</button>
                                 <button wire:click="delete({{ $service->id }})" class="cursor-pointer text-red-600 hover:text-red-700 p-2 rounded-lg hover:bg-gray-300 transition">Remover</button>
@@ -51,8 +51,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="p-4 border-t border-gray-400">
+                {{ $services->links() }}
+            </div>
         </div>
-        {{ $services->links() }}
     </div>
 
     <div class=" {{ $showModal ? 'flex' : 'hidden' }} z-50 fixed inset-0 items-center justify-center bg-black/40 backdrop-blur-xs">

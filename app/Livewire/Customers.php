@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,12 +17,25 @@ class Customers extends Component
     public $isEditing;
     public $isDeleting;
     public $id;
+    public $adminId;
+
+    #[Validate( ['name' => 'required|string|min:3|max:255'])]
     public $name;
+    #[Validate( ['tax_id' => 'required|digits:11|unique:customers,tax_id'])]
     public $tax_id;
+    #[Validate( ['birth_date' => 'required|date|before:today'])]
     public $birth_date;
+    #[Validate( ['phone' => 'required|numeric|digits:11'])]
     public $phone;
+    #[Validate( ['email' => 'required|email|unique:users,email'])]
     public $email;
+    #[Validate( ['password' => 'required|string|min:6'])]
     public $password;
+
+    public function mount()
+    {
+        $this->adminId = Admin::where('user_id', Auth::id())->first()->id;
+    }
     public function edit($id) {
 
         $this->id = $id;
@@ -67,13 +82,8 @@ class Customers extends Component
 
     public function save()
     {
+        $this->validate();
         if ($this->isEditing) {
-            $this->validate([
-                'name' => 'required|string|min:3|max:255',
-                'tax_id' => 'required|digits:11|unique:customers,tax_id,' . $this->id,
-                'birth_date' => 'required|date|before:today',
-                'phone' => 'required|numeric|digits:11',
-            ]);
             Customer::findOrFail($this->id)->update([
                 'name' => $this->name,
                 'tax_id' => $this->tax_id,
@@ -81,15 +91,6 @@ class Customers extends Component
                 'phone' => $this->phone,
             ]);
         } else {
-            $this->validate([
-                'name' => 'required|string|min:3|max:255',
-                'tax_id' => 'required|digits:11|unique:customers,tax_id',
-                'birth_date' => 'required|date|before:today',
-                'phone' => 'required|numeric|digits:11',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:6',
-            ]);
-
             $user = User::create([
                 'email' => $this->email,
                 'password' => bcrypt($this->password),
@@ -100,6 +101,7 @@ class Customers extends Component
                 'tax_id' => $this->tax_id,
                 'birth_date' => $this->birth_date,
                 'phone' => $this->phone,
+                'admin_id' => $this->adminId
             ]);
         }
         $this->reset('name', 'tax_id', 'birth_date', 'phone', 'email', 'password');
@@ -117,7 +119,7 @@ class Customers extends Component
     }
     public function render()
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::where('admin_id', $this->adminId)->paginate(10);
         return view('livewire.customers', compact('customers'))
             ->layout('layouts.admin.admin', [
             'title' => 'Clientes',

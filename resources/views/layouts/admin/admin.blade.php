@@ -7,6 +7,8 @@
     <title>Barbershop Agendor</title>
     @vite('resources/css/app.css')
     @livewireStyles
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 </head>
 
 <body class="bg-white text-gray-800 min-h-screen flex">
@@ -62,7 +64,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out">
                     <path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                 </svg>
-                <span>{{ Str::ucfirst($admin->name) }}</span>
+                <span>{{ Str::ucfirst(Str::before($admin->name, ' ')) }}</span>
             </a>
         </nav>
     </aside>

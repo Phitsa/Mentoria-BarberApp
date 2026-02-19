@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Admin;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Livewire\Component;
 use App\Models\Service;
 use Livewire\WithPagination;
@@ -11,16 +12,15 @@ use Illuminate\Support\Facades\Auth;
 class Services extends Component
 {
     use WithPagination;
+    use HasFactory;
 
     public $isDeleting = false;
     public $showModal = false;
     public $isEditing = false;
     public $serviceId = null;
-
     public $description;
     public $price;
     public $name;
-
     public $adminId;
 
     protected $rules = [
