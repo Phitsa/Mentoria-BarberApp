@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('active');
             $table->string('phone');
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tax_id');
             $table->date('birth_date')->nullable();
             $table->string('phone');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
