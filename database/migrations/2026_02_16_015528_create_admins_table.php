@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->dateTime('joined_at');
-            $table->date('birth_date');
-            $table->string('tax_id');
-            $table->boolean('active');
-            $table->string('phone');
             $table->string('name');
+            $table->string('phone')->nullable();
+            $table->timestamp('last_login_at')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('admin');
     }
 };

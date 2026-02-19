@@ -9,6 +9,12 @@
             class="w-1/2 flex flex-col gap-2 z-40">
             @csrf
             <div class="flex flex-col">
+                <input type="text" placeholder="Nome" wire:model='name' class="rounded focus:outline-0 bg-sky-700 border border-2 border-sky-700 focus:border-sky-800 p-2">
+            </div>
+            <div class="flex flex-col">
+                <input type="tel" placeholder="Telefone" wire:model='phone' class="rounded focus:outline-0 bg-sky-700 border border-2 border-sky-700 focus:border-sky-800 p-2">
+            </div>
+            <div class="flex flex-col">
                 <input type="text" placeholder="Email" wire:model='email' class="rounded focus:outline-0 bg-sky-700 border border-2 border-sky-700 focus:border-sky-800 p-2">
             </div>
             <div class="flex flex-col">

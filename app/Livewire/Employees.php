@@ -2,7 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\Service;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,15 +17,34 @@ class Employees extends Component
     public $showModal;
     public $isEditing;
     public $isDeleting;
+    public $showInfo;
+    public $selectedServices = [];
+    public $selectedEmployee;
     public $id;
-    public $name;
+    public $adminId;
+    #[Validate(['tax_id' => 'required|numeric|digits:11'])]
     public $tax_id;
+    #[Validate( ['password' => 'required|min:8'])]
+    public $password;
+    #[Validate(['email' => 'required|email|unique:users,email'])]
+    public $email;
+    #[Validate( ['name' => 'required|min:8|string'])]
+    public $name;
+    #[Validate( ['phone' => 'required|numeric|digits_between:10,15'])]
     public $phone;
+    #[Validate( ['birth_date' => 'required|date'])]
     public $birth_date;
+    #[Validate( ['active' => 'required|boolean'])]
     public $active = false;
+    public $employee;
+
+    public function mount()
+    {
+        $this->adminId = Admin::where('user_id', Auth::id())->first()->id;
+    }
     public function create()
     {
-        $this->reset('name','tax_id', 'phone', 'birth_date', 'active',);
+        $this->reset('name','tax_id', 'phone', 'birth_date', 'active', 'password', 'email');
         $this->isDeleting = false;
         $this->isEditing = false;
         $this->showModal = true;
@@ -30,13 +54,14 @@ class Employees extends Component
     {
         $employee = Employee::findOrFail($id);
 
+        $this->employee = $employee;
         $this->id = $employee->id;
         $this->name = $employee->name;
         $this->phone = $employee->phone;
         $this->tax_id = $employee->tax_id;
         $this->active = $employee->active;
-        $this->birth_date = $employee->birh_date;
-
+        $this->birth_date = $employee->birth_date;
+        $this->selectedServices = $employee->services->pluck('id')->toArray();
         $this->isDeleting = false;
         $this->isEditing = true;
         $this->showModal = true;
@@ -44,6 +69,7 @@ class Employees extends Component
 
     public function save()
     {
+        $this->validate();
         if ($this->isEditing){
             Employee::findOrFail($this->id)->update([
                 'name' => $this->name,
@@ -52,16 +78,29 @@ class Employees extends Component
                 'active' => $this->active,
                 'birth_date' => $this->birth_date,
             ]);
+            $employee = Employee::findOrFail($this->id);
+            $employee->services()->sync($this->selectedServices);
         } else {
+            $user = User::create([
+                'email' => $this->email,
+                'password' => bcrypt($this->password),
+            ]);
             Employee::query()->create([
                 'name' => $this->name,
+                'user_id' => $user->id,
                 'phone' => $this->phone,
                 'tax_id' => $this->tax_id,
                 'active' => $this->active,
                 'birth_date' => $this->birth_date,
+                'joined_at' => now(),
+                'admin_id' => $this->adminId
+
             ]);
+            $employee = Employee::where('user_id', $user->id)->first();
+            $employee->services()->sync($this->selectedServices);
+
         }
-        $this->reset('name','tax_id', 'phone', 'birth_date', 'active',);
+        $this->reset('name','tax_id', 'phone', 'birth_date', 'active', 'password', 'email', 'selectedServices');
         $this->showModal = false;
     }
 
@@ -70,11 +109,19 @@ class Employees extends Component
         $this->isDeleting = false;
         $this->isEditing = false;
         $this->showModal = false;
+        $this->showInfo = false;
+    }
+
+    public function info($id)
+    {
+        $this->selectedEmployee = Employee::with('services')->findOrFail($id);
+        $this->showInfo = true;
     }
     public function render()
     {
-        $employees = Employee::paginate(10);
-        return view('livewire.employees', compact('employees'))
+        $employees = Employee::where('admin_id', $this->adminId)->paginate(10);
+        $services = Service::all();
+        return view('livewire.employees', compact('employees', 'services'))
             ->layout('layouts.admin.admin', [
                 'title' => 'Funcionários',
                 'subtitle' => 'Gerencie seus funcionários'
