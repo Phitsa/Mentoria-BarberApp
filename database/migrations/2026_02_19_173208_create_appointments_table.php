@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers');
             $table->foreignId('employee_id')->constrained('employees');
-            $table->date('date');
-            $table->time('time');
+            $table->dateTime('scheduled_at');
+            $table->enum('status', ['scheduled', 'in_progress', 'completed', 'canceled'])->default('scheduled');
             $table->timestamps();
         });
     }

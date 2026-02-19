@@ -18,4 +18,9 @@ class Service extends Model
     {
         return $this->belongsToMany(Employee::class);
     }
+
+    public function appointments()
+    {
+        return $this->belongsToMany(Appointment::class, 'appointment_service');
+    }
 }
