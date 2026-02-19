@@ -21,7 +21,7 @@ class EmployeeFactory extends Factory
             'name' => fake()->name(),
             'phone' => fake()->phoneNumber(),
             'admin_id' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-            'tax_id' => fake()->numerify('############'),
+            'tax_id' => fake()->numerify('###########'),
             'birth_date' => fake()->date(),
             'user_id' => User::factory(),
             'joined_at' => fake()->dateTimeBetween('-2 years', 'now'),

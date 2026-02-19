@@ -21,7 +21,7 @@ class AdminFactory extends Factory
             'name' => fake()->name(),
             'phone' => fake()->phoneNumber(),
             'last_login_at' => fake()->optional()->dateTime(),
-            'user_id' => User::factory(), // cria automaticamente um user
+            'user_id' => User::factory(),
         ];
     }
 }

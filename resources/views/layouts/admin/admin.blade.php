@@ -7,8 +7,6 @@
     <title>Barbershop Agendor</title>
     @vite('resources/css/app.css')
     @livewireStyles
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 </head>
 
 <body class="bg-white text-gray-800 min-h-screen flex">

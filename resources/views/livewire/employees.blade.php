@@ -87,44 +87,64 @@
             </div>
 
             <div class="grid grid-cols-2 gap-2 p-6">
-                <div class="flex flex-col">
-                    <label for="" class="text-md text-gray-700">Email</label>
-                    <input type="email" wire:model="email" class="border p-2 rounded-lg border-gray-300 focus:ring focus:ring-gray-300 outline-none" placeholder="user@email.com">
-                </div>
-                <div class="flex flex-col">
-                    <label for="" class="text-md text-gray-700">Senha</label>
-                    <input type="password" wire:model="password" class="border p-2 rounded-lg border-gray-300 focus:ring focus:ring-gray-300 outline-none" placeholder="••••••">
-                </div>
+                @if(!$isEditing)
+                    <div class="flex flex-col">
+                        <label for="" class="text-md text-gray-700">Email</label>
+                        <input type="email" wire:model="email" class="border p-2 rounded-lg border-gray-300 focus:ring focus:ring-gray-300 outline-none" placeholder="user@email.com">
+                        @error('email')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
+                    <div class="flex flex-col">
+                        <label for="" class="text-md text-gray-700">Senha</label>
+                        <input type="password" wire:model="password" class="border p-2 rounded-lg border-gray-300 focus:ring focus:ring-gray-300 outline-none" placeholder="••••••">
+                        @error('password')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                @endif
                 <div class="">
                     <label class="text-md text-gray-700">Nome</label>
                     <input type="text" wire:model="name" placeholder="Seu Nome" class="border focus:ring transition focus:ring-gray-300 outline-none border-gray-300 rounded-lg w-full p-2" required>
-                </div>
-                <div class="">
-                    <label class="text-md text-gray-700">CPF</label>
-                    <input type="number" step="0.01" wire:model="tax_id" placeholder="000.000.000-00" class="outline-none focus:ring focus:ring-gray-300 transition border border-gray-300 rounded-lg w-full p-2" required>
+                    @error('name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="">
+                    <label class="text-md text-gray-700">CPF</label>
+                    <input type="number" step="0.01" wire:model="tax_id" placeholder="000.000.000-00" class="outline-none focus:ring focus:ring-gray-300 transition border border-gray-300 rounded-lg w-full p-2" required>
+                    @error('tax_id')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="">
                     <label class="text-md text-gray-700">phone</label>
                     <input type="text" step="0.01" wire:model="phone" placeholder="(00) 00000-0000" class="outline-none focus:ring focus:ring-gray-300 transition border border-gray-300 rounded-lg w-full p-2" required>
+                    @error('phone')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="">
                     <label class="text-md text-gray-700">Data de Nascimento</label>
                     <input wire:model="birth_date" type="date" value="" class="outline-none focus:ring focus:ring-gray-300 transition border border-gray-300 rounded-lg w-full p-2">
+                    @error('birth_date')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
-
                 <div>
                     <label class="text-md text-gray-700">Serviços</label>
+
                     <select
                         name="services[]"
                         multiple
                         wire:model="selectedServices"
-                        class="w-full min-h-[120px] rounded-xl border border-gray-300
+                        class="w-full min-h-[200px] rounded-xl border border-gray-300
                             bg-white px-4 py-3 text-sm
-                            shadow-sm
-                            focus:border-black focus:ring-2 focus:ring-black/20
-                            transition-all duration-200
+                            shadow-sm focus:ring-2 focus:ring-gray-300
+                            transition-all duration-200 outline-none
                             scrollbar-thin scrollbar-thumb-gray-300"
                     >
                         @foreach($services as $service)
@@ -136,8 +156,11 @@
                             </option>
                         @endforeach
                     </select>
-
+                    @error('selectedServices')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
+
 
                 <div class="col-span-1 my-1 ">
                     <label class="block text-md text-gray-700">Ativo?</label>
@@ -148,7 +171,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-300 flex justify-end p-6">
-                    <button type="submit" class="border-gray-300  col-span-2 transition cursor-pointer bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                    <button type="submit" class="border-gray-300 col-span-2 transition cursor-pointer bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
                         Salvar Funcionário
                     </button>
                 </div>
@@ -215,17 +238,25 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-300">
-                        <tr>
-                            @foreach ($employee->services as $service)
-                                <td>
-                                    <th class="p-4">{{ $service->name }}</th>
-                                    <td class="p-4">{{ $service->price }}</td>
-                                </td>
-                            @endforeach
-                        </tr>
+                            @if($employeeServices && $employeeServices->count())
+                                @foreach ($employeeServices as $service)
+                                    <tr>
+                                        <td class="p-4">{{ $service->name }}</td>
+                                        <td class="p-4">R$ {{ number_format($service->price, 2, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="2" class="p-4 text-center text-gray-400">Nenhum serviço cadastrado</td>
+                                </tr>
+                            @endif
                     </tbody>
                 </table>
-                <div class="p-4 border-t border-gray-400"> links...</div>
+                @if($employeeServices && $employeeServices->hasPages())
+                    <div class="p-4 border-t border-gray-400">
+                        {{ $employeeServices->onEachSide(0)->links() }}
+                    </div>
+                @endif
             </div>
 
         </div>
