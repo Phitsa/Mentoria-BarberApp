@@ -31,6 +31,7 @@ class Customers extends Component
     public $email;
     #[Validate( ['password' => 'required|string|min:6'])]
     public $password;
+    public $customer;
 
     public function mount()
     {
@@ -62,18 +63,15 @@ class Customers extends Component
     }
     public function delete($id)
     {
-        $this->id = $id;
-        $customer = Customer::findOrFail($id);
-        $this->name = $customer->name;
+        $this->customer = Customer::findOrFail($id);
         $this->isDeleting = true;
         $this->isEditing = false;
         $this->showModal = false;
     }
 
-    public function confirmDelete()
+    public function deleteCustomer()
     {
-        Customer::findOrFail($this->id)->delete();
-        User::findOrFail($this->id)->delete();
+        $this->customer->delete();
 
         $this->isDeleting = false;
         $this->isEditing = false;
