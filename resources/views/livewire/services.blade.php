@@ -4,7 +4,7 @@
 <div class="pt-4">
     {{-- Header? --}}
     <div class="flex flex-row justify-between items-center">
-        <h1 class="text-xl">Lista de serviços</h1>
+        <h1 class="text-xl">Lista de Serviços</h1>
         <button
             wire:click="create"
             class="inline-flex items-center gap-2 px-4 py-2.5
@@ -22,7 +22,7 @@
                 <path d="M8 12h8"/>
                 <path d="M12 8v8"/>
             </svg>
-            <span>Cadastrar serviço</span>
+            <span>Cadastrar Serviço</span>
         </button>
     </div>
 
