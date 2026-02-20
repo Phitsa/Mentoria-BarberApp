@@ -9,7 +9,7 @@
     @livewireStyles
 </head>
 
-<body class="bg-white text-gray-800 min-h-screen flex">
+<body class="bg-white text-gray-800 h-screen flex overflow-hidden">
     @php
         $url = url()->current();
         $user = auth()->user();
@@ -18,7 +18,7 @@
     @endphp
 
     <!-- Sidebar -->
-    <aside class="h-screen flex flex-col bg-gray-100 drop-shadow-lg/25 border-r border-gray-200   ">
+    <aside class="h-screen flex flex-col bg-gray-100 drop-shadow-lg/25 border-r border-gray-200">
 
         <!-- Logo -->
         <div class="flex items-center gap-1 text-2xl font-semibold tracking-wide px-10 py-6">
@@ -28,7 +28,7 @@
 
         <div class="border-t border-gray-300/40"></div>
         <!-- Menu -->
-        <nav class="flex flex-col gap-2 text-sm font-medium px-2 py-4 h-full">
+        <nav class="flex flex-col gap-2 text-sm font-medium px-2 py-4 h-full overflow-y-auto">
             <a href="{{ route('admin.index') }}" class="{{ $url === route('admin.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house">
                     <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
@@ -68,10 +68,10 @@
     </aside>
 
     <!-- Content -->
-    <main class="flex-1 p-10">
-        <div class="space-y-8">
+    <main class="flex-1 p-10 overflow-y-auto">
+        <div class="">
             <!-- Título -->
-            <div>
+            <div class="border-b border-gray-300 pb-4">
                 <h1 class="text-2xl font-semibold text-black">{{ $title }}</h1>
                 <p class="text-sm text-gray-900">{{ $subtitle }}</p>
             </div>

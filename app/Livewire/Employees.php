@@ -112,6 +112,26 @@ class Employees extends Component
         $this->showModal = false;
     }
 
+    public function delete($id) {
+        $this->employee = Employee::findOrFail($id);
+
+
+        $this->isDeleting = true;
+        $this->isEditing = false;
+        $this->showModal = false;
+        $this->showInfo = false;
+    }
+
+    public function deleteEmployee() {
+
+        $this->employee->delete();
+
+        $this->isDeleting = false;
+        $this->isEditing = false;
+        $this->showModal = false;
+        $this->showInfo = false;
+    }
+
     public function closeModal()
     {
         $this->isDeleting = false;

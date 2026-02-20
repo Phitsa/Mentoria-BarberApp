@@ -24,11 +24,11 @@
                 <table class="min-w-full divide-y divide-gray-400">
                     <thead class="bg-gray-200">
                         <tr class="text-sm text-gray-900">
-                            <th class="px-4 py-3 text-left">Nome</th>
-                            <th class="px-4 py-3 text-left">CPF</th>
-                            <th class="px-4 py-3 text-left">Celular</th>
-                            <th class="px-4 py-3 text-left">Data de Nascimento</th>
-                            <th class="px-4 py-3 text-right">Ações</th>
+                            <th class="px-2 py-3 text-left">Nome</th>
+                            <th class="px-2 py-3 text-left">CPF</th>
+                            <th class="px-2 py-3 text-left">Celular</th>
+                            <th class="px-2 py-3 text-left">Data de Nascimento</th>
+                            <th class="px-2 py-3 text-right">Ações</th>
                         </tr>
                     </thead>
 
