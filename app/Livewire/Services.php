@@ -22,6 +22,7 @@ class Services extends Component
     public $price;
     public $name;
     public $adminId;
+    public $service;
 
     protected $rules = [
             'price' => 'required|numeric',
@@ -54,10 +55,7 @@ class Services extends Component
     }
 
     public function delete($id) {
-        $service = Service::findOrFail($id);
-
-        $this->serviceId = $id;
-        $this->name = $service->name;
+        $this->service = Service::findOrFail($id);
 
         $this->showModal = false;
         $this->isDeleting = true;
@@ -85,10 +83,11 @@ class Services extends Component
 
     }
 
-    public function confirmDelete($id) {
+    public function deleteService() {
+        $this->service->delete();
+
         $this->isDeleting = false;
-        $service = Service::findOrFail($id);
-        $service->delete();
+        $this->showModal = false;
     }
 
     public function closeModal() {

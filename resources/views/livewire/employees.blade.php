@@ -28,8 +28,8 @@
         </button>
     </div>
 
-    <div class="mt-6 w-full">
-        <div class="bg-gray-100 rounded-xl shadow-xl overflow-hidden">
+    <div class="mt-6 w-full shadow-xl">
+        <div class="bg-gray-100 rounded-xl shadow-sm overflow-hidden">
             <div class="px-4 py-3 border-b border-gray-400 flex items-center justify-between">
                 <div class="text-sm text-gray-800">Exibindo {{ $count }} {{ $count === 1 ? 'funcionário' : 'funcionários' }}</div>
             </div>
