@@ -78,7 +78,7 @@
     <div class="{{ $showModal ? 'flex' : 'hidden' }}
         fixed inset-0 z-50
         items-center justify-center
-        bg-black/40 backdrop-blur-sm">
+        bg-black/40 backdrop-blur-sm" wire:click.self="closeModal()">
         <form
             wire:submit.prevent="save($id)"
             method="POST"
@@ -199,7 +199,7 @@
     <div class="{{ $isDeleting ? 'flex' : 'hidden' }}
         fixed inset-0 z-50
         items-center justify-center
-        bg-black/40 backdrop-blur-sm">
+        bg-black/40 backdrop-blur-sm" wire:click.self="closeModal()">
         <div class="
             w-full max-w-2xl rounded-xl bg-white shadow-2xl border border-gray-200
             max-h-[90vh] overflow-y-auto"
@@ -252,7 +252,7 @@
     <div class="{{ $showInfo ? 'flex' : 'hidden' }}
         fixed inset-0 z-50
         items-center justify-center
-        bg-black/40 backdrop-blur-sm"
+        bg-black/40 backdrop-blur-sm" wire:click.self="closeModal()"
     >
         <div class="
             w-full max-w-2xl rounded-xl bg-white shadow-2xl border border-gray-200

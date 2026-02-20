@@ -43,7 +43,7 @@ class Employees extends Component
     }
     public function create()
     {
-        $this->reset('name','tax_id', 'phone', 'birth_date', 'active', 'password', 'email');
+        $this->reset('name','tax_id', 'phone', 'birth_date', 'active', 'password', 'email', 'selectedServices');
         $this->isDeleting = false;
         $this->isEditing = false;
         $this->showModal = true;
