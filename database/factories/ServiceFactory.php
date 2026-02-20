@@ -29,6 +29,8 @@ class ServiceFactory extends Factory
                 'Sobrancelha',
                 'Hidratação Capilar',
                 'Platinado',
+                'Corte Infantil',
+                'Corte Feminino',
             ]),
             'admin_id' => Admin::inRandomOrder()->first()?->id,
             'price' => $this->faker->randomFloat(2, 25, 120),

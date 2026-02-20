@@ -16,7 +16,7 @@
 
     {{-- Lista de serviços TABLE--}}
     <div class="mt-6 w-full shadow-xl">
-        <div class="bg-gray-100 rounded shadow-sm overflow-hidden mb-2">
+        <div class="bg-gray-100 rounded-lg shadow-sm overflow-hidden">
             <div class="px-4 py-3 border-b border-gray-400 flex items-center justify-between">
                 <div class="text-sm text-gray-800">Exibindo {{ $count }} {{ $count === 1 ? 'serviço' : 'serviços' }}</div>
             </div>
@@ -25,10 +25,10 @@
                 <table class="min-w-full divide-y divide-gray-400">
                     <thead class="bg-gray-200">
                         <tr class="text-sm font-medium text-gray-800">
-                            <th class="px-4 py-3 text-left">Serviço</th>
-                            <th class="px-4 py-3 text-left">Preço</th>
-                            <th class="px-4 py-3 text-left">Descrição</th>
-                            <th class="px-4 py-3 text-right">Ações</th>
+                            <th class="px-2 py-3 text-left">Serviço</th>
+                            <th class="px-2 py-3 text-left">Preço</th>
+                            <th class="px-2 py-3 text-left">Descrição</th>
+                            <th class="px-2 py-3 text-right">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="bg-gray-100 divide-y divide-gray-300">

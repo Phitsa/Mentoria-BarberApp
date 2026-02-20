@@ -20,21 +20,20 @@ class Employees extends Component
     public $showInfo;
     public $selectedServices = [];
     public $selectedEmployee;
+    public $selectedEmployeeId;
     public $id;
     public $adminId;
-    #[Validate(['tax_id' => 'required|numeric|digits:11'])]
+    #[Validate('required|numeric|digits:11')]
     public $tax_id;
-    #[Validate( ['password' => 'required|min:8'])]
     public $password;
-    #[Validate(['email' => 'required|email|unique:users,email'])]
     public $email;
-    #[Validate( ['name' => 'required|min:8|string'])]
+    #[Validate('required|min:8|string')]
     public $name;
-    #[Validate( ['phone' => 'required|numeric|digits_between:10,15'])]
+    #[Validate('required|string|min:10|max:20')]
     public $phone;
-    #[Validate( ['birth_date' => 'required|date'])]
+    #[Validate('required|date')]
     public $birth_date;
-    #[Validate( ['active' => 'required|boolean'])]
+    #[Validate('boolean')]
     public $active = false;
     public $employee;
 
@@ -44,7 +43,7 @@ class Employees extends Component
     }
     public function create()
     {
-        $this->reset('name','tax_id', 'phone', 'birth_date', 'active', 'password', 'email');
+        $this->reset('name','tax_id', 'phone', 'birth_date', 'active', 'password', 'email', 'selectedServices');
         $this->isDeleting = false;
         $this->isEditing = false;
         $this->showModal = true;
@@ -70,6 +69,14 @@ class Employees extends Component
     public function save()
     {
         $this->validate();
+
+        if (!$this->isEditing) {
+            $this->validate([
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8',
+            ]);
+        }
+
         if ($this->isEditing){
             Employee::findOrFail($this->id)->update([
                 'name' => $this->name,
@@ -79,6 +86,7 @@ class Employees extends Component
                 'birth_date' => $this->birth_date,
             ]);
             $employee = Employee::findOrFail($this->id);
+
             $employee->services()->sync($this->selectedServices);
         } else {
             $user = User::create([
@@ -104,24 +112,55 @@ class Employees extends Component
         $this->showModal = false;
     }
 
-    public function closeModal()
-    {
+    public function delete($id) {
+        $this->employee = Employee::findOrFail($id);
+
+
+        $this->isDeleting = true;
+        $this->isEditing = false;
+        $this->showModal = false;
+        $this->showInfo = false;
+    }
+
+    public function deleteEmployee() {
+
+        $this->employee->delete();
+
         $this->isDeleting = false;
         $this->isEditing = false;
         $this->showModal = false;
         $this->showInfo = false;
     }
 
+    public function closeModal()
+    {
+        $this->isDeleting = false;
+        $this->isEditing = false;
+        $this->showModal = false;
+        $this->showInfo = false;
+        $this->selectedEmployeeId = null;
+    }
+
     public function info($id)
     {
-        $this->selectedEmployee = Employee::with('services')->findOrFail($id);
+        $this->selectedEmployee = Employee::findOrFail($id);
+        $this->selectedEmployeeId = $id;
+        $this->resetPage('servicesPage');
         $this->showInfo = true;
     }
     public function render()
     {
         $employees = Employee::where('admin_id', $this->adminId)->paginate(10);
         $services = Service::all();
-        return view('livewire.employees', compact('employees', 'services'))
+
+        $employeeServices = null;
+        if ($this->selectedEmployeeId) {
+            $employeeServices = Service::whereHas('employees', function ($query): void {
+                $query->where('employee_id', $this->selectedEmployeeId);
+            })->paginate(10, ['*'], 'servicesPage');
+        }
+
+        return view('livewire.employees', compact('employees', 'services', 'employeeServices'))
             ->layout('layouts.admin.admin', [
                 'title' => 'Funcionários',
                 'subtitle' => 'Gerencie seus funcionários'

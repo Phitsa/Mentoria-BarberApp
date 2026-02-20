@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
     {
         return [
             'phone' => fake()->phoneNumber(),
-            'tax_id' => fake()->numerify('############'),
+            'tax_id' => fake()->numerify('###########'),
             'birth_date' => fake()->date(),
             'user_id' => User::factory(),
             'name' => fake()->name(),

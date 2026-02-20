@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
         Admin::all()->each(function ($admin) {
             Service::factory()
-                ->count(15)
+                ->count(20)
                 ->create([
                     'admin_id' => $admin->id,
                 ]);
@@ -50,6 +50,14 @@ class DatabaseSeeder extends Seeder
                 ->create([
                     'admin_id' => $admin->id,
                 ]);
+
+            // Associar serviços aleatórios a cada employee do admin
+            $services = Service::where('admin_id', $admin->id)->pluck('id');
+            Employee::where('admin_id', $admin->id)->each(function ($employee) use ($services) {
+                $employee->services()->attach(
+                    $services->random(rand(5, 15))
+                );
+            });
         });
 
     }
