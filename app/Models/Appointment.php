@@ -10,7 +10,6 @@ class Appointment extends Model
     /** @use HasFactory<\Database\Factories\AppointmentFactory> */
     use HasFactory;
 
-
     public function customer()
     {
         return $this->belongsTo(Customer::class);

@@ -17,6 +17,10 @@ class Appointments extends Component
 
     public function render()
     {
-        return view('livewire.appointments');
+        return view('livewire.appointments')
+        ->layout('layouts.admin.admin', [
+            'title' => 'Agendamentos',
+            'subtitle' => 'Gerencie seus agendamentos'
+        ]);
     }
 }
