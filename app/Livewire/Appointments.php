@@ -14,6 +14,21 @@ class Appointments extends Component
     public $employeeId;
     public $scheduledAt;
     public $status;
+    public $appointment;
+
+    public function create()
+    {
+        $this->showModal = true;
+        $this->isEditing = false;
+        $this->isDeleting = false;
+    }
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->isEditing = false;
+        $this->isDeleting = false;
+    }
 
     public function render()
     {
