@@ -37,6 +37,16 @@
                 <span>Dashboard</span>
             </a>
 
+            <a href="{{ route('admin.appointments.index') }}" class="{{ $url === route('admin.appointments.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-plus-icon lucide-clock-plus"><path d="M12 6v6l3.644 1.822"/><path d="M16 19h6"/><path d="M19 16v6"/><path d="M21.92 13.267a10 10 0 1 0-8.653 8.653"/></svg>
+                <span>Appointments</span>
+            </a>
+
+            <a href="{{ route('admin.services.index') }}" class="{{ $url === route('admin.services.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scissors-icon lucide-scissors"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
+                <span>Serviços</span>
+            </a>
+
             <a href="{{ route('admin.customers.index') }}" class=" {{ $url === route('admin.customers.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round-icon lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
                 <span>Clientes</span>
@@ -45,11 +55,6 @@
             <a href="{{ route('admin.employees.index') }}" class="{{ $url === route('admin.employees.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-user-icon lucide-file-user"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M16 22a4 4 0 0 0-8 0"/><circle cx="12" cy="15" r="3"/></svg>
                 <span>Funcionários</span>
-            </a>
-
-            <a href="{{ route('admin.services.index') }}" class="{{ $url === route('admin.services.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scissors-icon lucide-scissors"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
-                <span>Serviços</span>
             </a>
 
             {{-- Fazer no futuro TODO
