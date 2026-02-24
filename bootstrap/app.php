@@ -15,6 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(function (Request $request): string {
             return route('admin.auth.login');
         });
+
+        $middleware->alias([
+            'isAdmin' => \App\Http\Middleware\isAdmin::class,
+            'isEmployee' => \App\Http\Middleware\isEmployee::class,
+            'isCustomer' => \App\Http\Middleware\isCustomer::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

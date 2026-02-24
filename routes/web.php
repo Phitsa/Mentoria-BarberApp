@@ -3,12 +3,7 @@
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\SignUpController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
-use App\Http\Controllers\Admin\Customers\CustomersController;
-use App\Http\Controllers\Admin\Employee\EmployeeController;
-use App\Http\Controllers\Admin\Products\ProductsController;
-use App\Http\Controllers\Admin\Services\ListServicesController;
 use App\Livewire\Appointments;
 use App\Livewire\Customers;
 use App\Livewire\Dashboard;
@@ -33,11 +28,14 @@ Route::prefix("admin") // Prefix é usado para criar um grupo de rotas
             });
 
         Route::middleware('auth')->group(function(): void {
-            Route::get('appointments', Appointments::class)->name('appointments.index');
-            Route::get('customers', Customers::class)->name('customers.index');
-            Route::get('services', Services::class)->name('services.index');
-            Route::get('products', Products::class)->name('products.index');
-            Route::get('employees', Employees::class)->name('employees.index');
-            Route::get('', Dashboard::class)->name('index');
+
+                Route::middleware('isAdmin')->group(function(): void {
+                    Route::get('appointments', Appointments::class)->name('appointments.index');
+                    Route::get('customers', Customers::class)->name('customers.index');
+                    Route::get('services', Services::class)->name('services.index');
+                    Route::get('products', Products::class)->name('products.index');
+                    Route::get('employees', Employees::class)->name('employees.index');
+                    Route::get('', Dashboard::class)->name('index');
+                });
         });
     });
