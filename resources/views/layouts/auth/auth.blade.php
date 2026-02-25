@@ -9,7 +9,7 @@
     @livewireStyles
 </head>
 <body class="relative">
-    @yield('content')
+    {{ $slot }}
     @livewireScripts
 </body>
 </html>

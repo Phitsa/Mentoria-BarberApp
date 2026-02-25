@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Admin;
 use App\Models\Customer;
@@ -118,7 +118,7 @@ class Customers extends Component
     public function render()
     {
         $customers = Customer::where('admin_id', $this->adminId)->paginate(10);
-        return view('livewire.customers', compact('customers'))
+        return view('livewire.admin.customers', compact('customers'))
             ->layout('layouts.admin.admin', [
             'title' => 'Clientes',
             'subtitle' => 'Gerencie seus clientes'

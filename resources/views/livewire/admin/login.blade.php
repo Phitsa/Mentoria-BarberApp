@@ -32,6 +32,7 @@
         <div class="text-center mb-20 z-50">
             <p class="text-sm font-medium">Ainda não tem uma conta?</p>
             <a href=" {{ route("admin.auth.signup") }}" class="text-bold bg-sky-700/70 hover:bg-sky-800 transition mt-2 cursor-pointer text-white px-4 py-1 rounded">Sign up</a>
+            <a href="{{ route('employee.auth.login') }}" class="px-4 py-1 rounded text-sm text-white underline transition">Funcionário?</a>
         </div>
     </div>
 
@@ -39,7 +40,7 @@
     <div class="absolute bottom-50 right-20 rotate-20">
         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scissors-icon lucide-scissors blur-xs text-white "><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
     </div>
-    <div class="absolute bottom-20 right-70 rotate-340">
+    <div class="absolute bottom-30 right-70 rotate-340">
         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-icon lucide-package blur-xs text-white"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg>
     </div>
     <div class="absolute top-20 right-115 rotate-20">

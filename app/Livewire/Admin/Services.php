@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -99,7 +99,7 @@ class Services extends Component
     public function render() {
         $services = Service::where('admin_id', $this->adminId)->paginate(10);
 
-        return view('livewire.services', compact('services'))
+        return view('livewire.admin.services', compact('services'))
             ->layout('layouts.admin.admin', [
                 'title' => 'Serviços',
                 'subtitle' => 'Gerencie seus serviços'

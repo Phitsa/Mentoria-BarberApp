@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Admin;
 use App\Models\User;
@@ -45,6 +45,7 @@ class Signup extends Component
 
     public function render()
     {
-        return view('livewire.signup');
+        return view('livewire.admin.signup')
+        ->layout('layouts.auth.auth');
     }
 }

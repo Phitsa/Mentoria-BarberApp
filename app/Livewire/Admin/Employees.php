@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Admin;
 use App\Models\Employee;
@@ -160,7 +160,7 @@ class Employees extends Component
             })->paginate(10, ['*'], 'servicesPage');
         }
 
-        return view('livewire.employees', compact('employees', 'services', 'employeeServices'))
+        return view('livewire.admin.employees', compact('employees', 'services', 'employeeServices'))
             ->layout('layouts.admin.admin', [
                 'title' => 'Funcionários',
                 'subtitle' => 'Gerencie seus funcionários'

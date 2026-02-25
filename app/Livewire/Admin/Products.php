@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Product;
 use Livewire\Component;
@@ -92,7 +92,7 @@ class Products extends Component
     public function render()
     {
         $products = Product::paginate(10);
-        return view('livewire.products', compact('products'))
+        return view('livewire.admin.products', compact('products'))
             ->layout('layouts.admin.admin', [
                 'title' => 'Produtos',
                 'subtitle' => 'Gerencie seus produtos'

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class isCustomer
@@ -15,6 +16,10 @@ class isCustomer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if (Auth::user()->customer()->exists()) {
+            return $next($request);
+        } else {
+            abort(403, 'Unauthorized, go to customer/login');
+        }
     }
 }

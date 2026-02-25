@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
@@ -12,6 +12,7 @@ class Login extends Component
     public $email;
     #[Validate(['password' => 'required|min:6'])]
     public $password;
+
     public function login()
     {
         $credentials = $this->validate();
@@ -24,6 +25,7 @@ class Login extends Component
     }
     public function render()
     {
-        return view('livewire.login');
+        return view('livewire.admin.login')
+        ->layout('layouts.auth.auth');
     }
 }

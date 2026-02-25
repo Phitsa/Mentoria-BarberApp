@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use Livewire\Component;
 
@@ -32,7 +32,7 @@ class Appointments extends Component
 
     public function render()
     {
-        return view('livewire.appointments')
+        return view('livewire.admin.appointments')
         ->layout('layouts.admin.admin', [
             'title' => 'Agendamentos',
             'subtitle' => 'Gerencie seus agendamentos'
