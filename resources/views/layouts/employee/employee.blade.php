@@ -37,12 +37,17 @@
                 <span>Dashboard</span>
             </a>
 
-            {{--  <a href="{{ route('employee.appointments.index') }}" class="{{ $url === route('employee.appointments.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
+            <a href="{{ route('employee.appointments.index') }}" class="{{ $url === route('employee.appointments.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-plus-icon lucide-clock-plus"><path d="M12 6v6l3.644 1.822"/><path d="M16 19h6"/><path d="M19 16v6"/><path d="M21.92 13.267a10 10 0 1 0-8.653 8.653"/></svg>
                 <span>Appointments</span>
             </a>
 
-            <a href="{{ route('employee.services.index') }}" class="{{ $url === route('employee.services.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
+            <a href="{{ route('employee.availability.index') }}" class="{{ $url === route('employee.availability.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Availability</span>
+            </a>
+
+            {{--  <a href="{{ route('employee.services.index') }}" class="{{ $url === route('employee.services.index') ? 'bg-slate-800 text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'  }} flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scissors-icon lucide-scissors"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
                 <span>Serviços</span>
             </a>

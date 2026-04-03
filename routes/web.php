@@ -10,6 +10,8 @@ use App\Livewire\Admin\Products as AdminProducts;
 use App\Livewire\Admin\Services as AdminServices;
 use App\Livewire\Admin\Login as AdminLogin;
 use App\Livewire\Admin\Signup as AdminSignup;
+use App\Livewire\Employee\Appointments as EmployeeAppointments;
+use App\Livewire\Employee\Availability;
 use App\Livewire\Employee\Dashboard as EmployeeDashboard;
 use App\Livewire\Employee\Login as EmployeeLogin;
 
@@ -57,7 +59,8 @@ Route::prefix('employee')
         Route::middleware('auth')->group(function(): void {
 
             Route::middleware('isEmployee')->group(function(): void {
-                // Route::get('appointments', Appointments::class)->name('appointments.index');
+                Route::get('appointments', EmployeeAppointments::class)->name('appointments.index');
+                Route::get('availability', Availability::class)->name('availability.index'); // Rota para disponibilidade
                 // Route::get('customers', Customers::class)->name('customers.index');
                 // Route::get('services', Services::class)->name('services.index');
                 // Route::get('products', Products::class)->name('products.index');

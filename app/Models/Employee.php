@@ -20,4 +20,9 @@ class Employee extends Model
     {
         return $this->belongsToMany(Service::class);
     }
+
+    public function availabilities()
+    {
+        return $this->hasMany(\App\Models\Employee\Availability::class);
+    }
 }
