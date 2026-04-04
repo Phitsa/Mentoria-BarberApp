@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Livewire\Employee\Availability;
 use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Models\Employee\Availability as EmployeeAvailability;
 use App\Models\Service;
 use App\Models\User;
+use Database\Factories\Employee\AvailabilityFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -50,6 +53,15 @@ class DatabaseSeeder extends Seeder
                 ->create([
                     'admin_id' => $admin->id,
                 ]);
+
+
+        Employee::all()->each(function ($employee) {
+            EmployeeAvailability::factory()
+            ->count(30)
+            ->create([
+                'employee_id' => $employee->id,
+            ]);
+        });
 
             // Associar serviços aleatórios a cada employee do admin
             $services = Service::where('admin_id', $admin->id)->pluck('id');

@@ -3,10 +3,12 @@
 namespace App\Models\Employee;
 
 use App\Models\Employee;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Availability extends Model
 {
+    use HasFactory;
     protected $table = 'employee_availability';
     protected $fillable = [
         'employee_id',
