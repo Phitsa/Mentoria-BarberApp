@@ -28,11 +28,26 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
         ])->id;
 
-        Admin::create([
+        $employeeId = User::factory()->create([
+            'email' => 'employee@example.com',
+        ])->id;
+
+        $adminTest = Admin::create([
             'name' => 'Admin Test',
             'phone' => '1234567890',
             'last_login_at' => now(),
             'user_id' => $userId,
+        ]);
+
+        Employee::create([
+            'name' => 'Employee Test',
+            'phone' => '0987654321',
+            'joined_at' => now(),
+            'birth_date' => '1990-01-01',
+            'tax_id' => '00000000000',
+            'active' => true,
+            'user_id' => $employeeId,
+            'admin_id' => $adminTest->id,
         ]);
 
         Admin::factory()->count(10)->create();
@@ -44,24 +59,15 @@ class DatabaseSeeder extends Seeder
                     'admin_id' => $admin->id,
                 ]);
             Customer::factory()
-                ->count(30)
+                ->count(5)
                 ->create([
                     'admin_id' => $admin->id,
                 ]);
             Employee::factory()
-                ->count(15)
+                ->count(10)
                 ->create([
                     'admin_id' => $admin->id,
                 ]);
-
-
-        Employee::all()->each(function ($employee) {
-            EmployeeAvailability::factory()
-            ->count(30)
-            ->create([
-                'employee_id' => $employee->id,
-            ]);
-        });
 
             // Associar serviços aleatórios a cada employee do admin
             $services = Service::where('admin_id', $admin->id)->pluck('id');
@@ -70,6 +76,14 @@ class DatabaseSeeder extends Seeder
                     $services->random(rand(5, 15))
                 );
             });
+        });
+
+        Employee::all()->each(function ($employee) {
+            EmployeeAvailability::factory()
+            ->count(100)
+            ->create([
+                'employee_id' => $employee->id,
+            ]);
         });
 
     }

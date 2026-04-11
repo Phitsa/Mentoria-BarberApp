@@ -41,11 +41,21 @@
                 <button wire:click="openEditModal(1)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[1] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[1] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
 
@@ -67,11 +77,21 @@
                 <button wire:click="openEditModal(2)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[2] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[2] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
 
@@ -93,11 +113,21 @@
                 <button wire:click="openEditModal(3)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[3] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[3] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
 
@@ -119,11 +149,21 @@
                 <button wire:click="openEditModal(4)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[4] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[4] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
 
@@ -145,11 +185,21 @@
                 <button wire:click="openEditModal(5)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[5] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[5] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
 
@@ -171,11 +221,21 @@
                 <button wire:click="openEditModal(6)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[6] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[6] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
 
@@ -198,11 +258,21 @@
                 <button wire:click="openEditModal(0)" class="bg-gray-200/50 hover:bg-gray-200 transition cursor-pointer text-gray-700 hover:text-gray-900 font-medium rounded-xl px-3 py-1.5 text-sm">Editar</button>
             </div>
             <div class="mt-4 min-h-11 flex flex-wrap gap-2">
-                @forelse (($availabilities[0] ?? []) as $availability)
+                @php
+                    $dayAvailabilities = $availabilities[0] ?? [];
+                    $visibleAvailabilities = array_slice($dayAvailabilities, 0, 5);
+                    $totalAvailabilities = count($dayAvailabilities);
+                @endphp
+
+                @forelse ($visibleAvailabilities as $availability)
                     <span class="rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-xs px-3 py-1">{{ $availability['time'] }}</span>
                 @empty
                     <p class="text-sm text-gray-500">Nenhum horário definido</p>
                 @endforelse
+
+                @if ($totalAvailabilities > 5)
+                    <p class="text-sm text-gray-500 mt-1">e mais {{ $totalAvailabilities - 5 }} horário(s)</p>
+                @endif
             </div>
         </div>
     </div>
@@ -300,7 +370,7 @@
 
                 <div>
                     <label class="block text-gray-700 text-md">Horario</label>
-                    <input type="time" wire:model="time" name="time" value="08:00" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2">
+                    <input type="time" wire:model="time" name="time" step="1800" value="08:00" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2">
                     @error('time')
                         <p class="text-red-700 text-xs">{{ $message }}</p>
                     @enderror

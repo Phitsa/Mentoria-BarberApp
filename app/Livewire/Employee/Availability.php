@@ -4,7 +4,9 @@ namespace App\Livewire\Employee;
 
 use App\Models\Employee;
 use App\Models\Employee\Availability as EmployeeAvailability;
+use App\Rules\RoundedTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -13,7 +15,7 @@ class Availability extends Component
     #[Validate('required|integer|between:0,6')]
     public $weekday;
 
-    #[Validate('required|date_format:H:i')]
+    #[Validate(['required', 'date_format:H:i', new RoundedTime])]
     public $time;
 
     #[Validate('required|boolean')]
@@ -40,11 +42,25 @@ class Availability extends Component
 
     public function mount()
     {
-        $user = Auth::id();
-        $this->employeeId = Employee::where('user_id', $user)->value('id');
-
         $this->weekday = 0;
         $this->active = true;
+    }
+
+    protected function rules()
+    {
+        return [
+            'time' => [
+                'required',
+                'date_format:H:i',
+                function ($attribute, $value, $fail) {
+                    $minute = (int) explode(':', $value)[1];
+
+                    if ($minute % 30 !== 0) {
+                        $fail('The time must be in 30-minute intervals.');
+                    }
+                },
+            ],
+        ];
     }
 
     public function create()
@@ -54,8 +70,30 @@ class Availability extends Component
 
     public function save()
     {
+        $user = Auth::id();
+        $employeeId = Employee::where('user_id', $user)->value('id');
+
+        if (!$employeeId) {
+            $this->addError('general', 'Funcionário não encontrado.');
+            return;
+        }
+
+        $this->employeeId = $employeeId;
+
+        $exists = EmployeeAvailability::where('employee_id', $this->employeeId)
+            ->where('weekday', $this->weekday)
+            ->where('time', $this->time)
+            ->exists();
+
+        if ($exists) {
+            $this->addError('time', 'Este horário já existe para este dia.');
+            return;
+        }
+
         $this->validate();
+
         $this->showModal = false;
+
         EmployeeAvailability::create([
             'employee_id' => $this->employeeId,
             'weekday' => $this->weekday,
@@ -100,7 +138,25 @@ class Availability extends Component
 
     public function render()
     {
+        $user = Auth::id();
+        $employeeId = Employee::where('user_id', $user)->value('id');
+
+        if (!$employeeId) {
+            // Se o usuário não for um funcionário, retorna array vazio
+            return view('livewire.employee.availability', [
+                'availabilities' => []
+            ])->layout('layouts.employee.employee', [
+                'title' => 'Disponibilidade',
+                'subtitle' => 'Gerenciar sua disponibilidade'
+            ]);
+        }
+
+        $this->employeeId = $employeeId;
+
         $availabilities = $this->availabilities = EmployeeAvailability::where('employee_id', $this->employeeId)
+                ->orderBy('weekday')
+                ->orderByDesc('active')
+                ->orderBy('time')
                 ->get()
                 ->groupBy('weekday')
                 ->toArray();

@@ -16,9 +16,12 @@ class AvailabilityFactory extends Factory
      */
     public function definition(): array
     {
+        $hour = $this->faker->numberBetween(7, 20);
+        $minute = $this->faker->randomElement(['00', '30']);
+
         return [
             'weekday' => $this->faker->numberBetween(0, 6),
-            'time' => $this->faker->time('H:i'),
+            'time' => sprintf('%02d:%s', $hour, $minute),
             'active' => $this->faker->boolean(),
         ];
     }
