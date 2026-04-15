@@ -63,65 +63,108 @@
         </div>
     </div>
 
-    <div class="{{ $showModal ? 'flex' : 'hidden' }} fixed inset-0 z-50 items-center justify-center bg-black/40 backdrop-blur-sm" wire:click.self="closeModal()">
-        <form wire:submit.prevent="save" method="POST" class="w-full max-w-2xl rounded-xl bg-white shadow-2xl border border-gray-200 max-h-[90vh] overflow-y-auto">
-            @csrf
-            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+    <div class="{{ $showCalendar ? 'flex' : 'hidden' }} fixed inset-0 z-50 items-center justify-center bg-black/30 p-4" wire:click.self="closeCalendar">
+        <div class="w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-black/5">
+            <div class="flex items-center justify-between gap-4 border-b border-gray-200 px-5 py-3">
                 <div>
-                    <h2 class="text-2xl font-semibold">Gerenciar disponibilidade</h2>
-                    <p class="text-sm text-gray-400">Informe os dados para definir um novo horario.</p>
+                    <p class="text-xs uppercase tracking-[0.24em] text-gray-500">Disponibilidade</p>
+                    <h2 class="text-lg font-semibold text-gray-900">Escolha um dia</h2>
                 </div>
                 <button
                     type="button"
-                    wire:click="closeModal"
-                    class="grid place-items-center cursor-pointer h-10 w-10 rounded-lg hover:bg-gray-100 transition"
+                    wire:click="closeCalendar"
+                    class="rounded-full border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
                 >
-                    ✕
+                    Fechar
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
-                <div>
-                    <label class="block text-gray-700 text-md">Cliente</label>
-                    <select wire:model="customerId" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2">
-                        <option value="">Selecione</option>
-                        @foreach ($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('customerId')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+            <div class="px-5 py-5">
+                <div class="flex items-center justify-between gap-2 pb-4">
+                    <button
+                        type="button"
+                        wire:click="previousWeek"
+                        class="rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+                    >
+                        ‹
+                    </button>
+                    <p class="text-sm font-medium text-gray-700">Semana de {{ \Carbon\Carbon::parse($weekDays[0]['date'])->format('d/m') }} a {{ \Carbon\Carbon::parse($weekDays[6]['date'])->format('d/m') }}</p>
+                    <button
+                        type="button"
+                        wire:click="nextWeek"
+                        class="rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+                    >
+                        ›
+                    </button>
                 </div>
 
-                <div>
-                    <label class="block text-gray-700 text-md">Data e hora</label>
-                    <input type="datetime-local" wire:model="scheduledAt" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2">
-                    @error('scheduledAt')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                <div class="flex w-full items-center gap-2 overflow-x-auto sm:justify-between sm:overflow-x-visible pb-2 px-2 sm:px-0 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent snap-x snap-mandatory lg:snap-none">
+                    @foreach ($weekDays as $day)
+                        <button
+                            type="button"
+                            wire:click="selectDay('{{ $day['date'] }}')"
+                            class="flex-shrink-0 snap-center lg:snap-none whitespace-nowrap rounded-full border px-4 py-3 text-left text-xs font-semibold transition
+                                {{ $day['isSelected'] ? 'border-blue-600 bg-blue-600 text-white' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50' }}"
+                        >
+                            <span class="block uppercase tracking-[0.18em] text-[10px]">{{ $day['label'] }}</span>
+                            <span class="mt-1 block text-sm font-bold leading-none">{{ $day['day'] }}</span>
+                        </button>
+                    @endforeach
                 </div>
 
-                <div>
-                    <label class="block text-gray-700 text-md">Status</label>
-                    <select wire:model="status" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2">
-                        <option value="">Selecione</option>
-                        <option value="agendado">Agendado</option>
-                        <option value="confirmado">Confirmado</option>
-                        <option value="cancelado">Cancelado</option>
-                        <option value="concluido">Concluido</option>
-                    </select>
-                    @error('status')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">Serviço</label>
+                        <select class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100">
+                            <option>Selecione um serviço</option>
+                            <option>Corte masculino</option>
+                            <option>Barba</option>
+                            <option>Corte + barba</option>
+                            <option>Coloração</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">Cliente</label>
+                        <select class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100">
+                            <option>Selecione um cliente</option>
+                            <option>Rafael Silva</option>
+                            <option>Mariana Costa</option>
+                            <option>Pedro Alves</option>
+                            <option>Ana Beatriz</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-6 rounded-3xl border border-gray-200 bg-gray-50 p-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.24em] text-gray-500">Horários</p>
+                            <p class="text-base font-semibold text-gray-900">{{ \Carbon\Carbon::parse($selectedDate ?? now())->format('d/m/Y') }}</p>
+                        </div>
+                        <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">Mock</span>
+                    </div>
+
+                    <div class="mt-4 grid gap-2 sm:grid-cols-2">
+                        @if (count($availableSlots))
+                            @foreach ($availableSlots as $slot)
+                                <button type="button" class="rounded-2xl border border-gray-200 bg-white px-3 py-3 text-left text-sm font-medium text-gray-900 transition hover:border-blue-300 hover:bg-blue-50">
+                                    {{ $slot }}
+                                </button>
+                            @endforeach
+                        @else
+                            <div class="col-span-full rounded-2xl border border-dashed border-gray-300 bg-white p-4 text-center text-sm text-gray-500">
+                                Nenhum horário disponível neste dia.
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="mt-5 flex justify-end">
+                    <button type="button" class="rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                        Agendar
+                    </button>
                 </div>
             </div>
-
-            <div class="border-t border-gray-200 flex justify-end p-6">
-                <button type="submit" class="h-11 px-6 rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold transition">
-                    Salvar
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

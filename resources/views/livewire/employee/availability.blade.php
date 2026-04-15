@@ -62,7 +62,7 @@
         <div class="shadow-md hover:shadow-lg transition border border-gray-200 rounded-xl p-4">
             <div class="flex justify-between items-start">
                 <div>
-                    <p class="font-medium">Terca-feira</p>
+                    <p class="font-medium">Terça-feira</p>
                     @php
                         $count = isset($availabilities[2]) ? count($availabilities[2]) : 0;
                     @endphp
@@ -357,7 +357,7 @@
                     <select name="weekday" wire:model="weekday" class="outline-none transition border border-gray-300 focus:ring-2 focus:ring-gray-300 rounded-lg w-full p-2">
                         <option value="0">Domingo</option>
                         <option value="1">Segunda-feira</option>
-                        <option value="2">Terca-feira</option>
+                        <option value="2">Terça-feira</option>
                         <option value="3">Quarta-feira</option>
                         <option value="4">Quinta-feira</option>
                         <option value="5">Sexta-feira</option>
